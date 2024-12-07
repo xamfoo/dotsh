@@ -18,7 +18,7 @@ git clone https://github.com/xamfoo/dotsh ~/.config/sh
 cd ~
 find ~/.config/sh -path ~/.config/sh/.git -prune -o -name '.*' \
   -exec bash -c "mv -f \"\$HOME/\$(basename \"{}\")\" \
-    \"\$HOME/\$(basename \"{}\").\$(date +'%s').bkup\"; ln -s \"{}\" ." \;
+  \"\$HOME/\$(basename \"{}\").\$(date +'%s').bkup\"; ln -s \"{}\" ." \;
 ```
 
 ## Initialization Order
