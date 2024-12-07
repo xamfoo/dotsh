@@ -18,6 +18,7 @@ _dotsh_bash_hooks() {
 }
 
 _dotsh_bash_prompt() {
+  command -v direnv >/dev/null || return 0
   export -f dotsh_direnv_prompt_prefix
   PS1='$(dotsh_direnv_prompt_prefix)'"$PS1"
 }
