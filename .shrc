@@ -1,0 +1,66 @@
+#!/usr/bin/env sh
+
+_dotsh_cleanup() {
+  unset _dotsh_editor_set
+  unset _dotsh_nnn_init
+  unset _dotsh_path_init
+  unset _dotsh_cleanup # self-destruct last
+}
+
+_dotsh_editor_set() {
+  while [ "$#" -gt 0 ]; do
+    if command -v "$1" >/dev/null; then
+      export EDITOR="$1"
+      return 0
+    fi
+    shift
+  done
+}
+
+_dotsh_nnn_init() {
+  command -v nnn >/dev/null || return 0
+  local nuke_path="$HOME/.config/nnn/plugins/nuke"
+  [ -e "$nuke_path" ] && export NNN_OPENER="$nuke_path"
+  export NNN_PLUG='f:-fzplug2;c:fzcd'
+}
+
+_dotsh_path_init() {
+  export _DOTSH_OLD_PATH_VAR=${_DOTSH_OLD_PATH_VAR:-$PATH}
+  PATH="$_DOTSH_OLD_PATH_VAR"
+}
+
+dotsh_direnv_prompt_prefix() {
+  if [ -n "$VIRTUAL_ENV" ] && [ -n "$DIRENV_DIR" ]; then
+    echo "($(basename $VIRTUAL_ENV)) "
+  fi
+}
+
+# See commented source:
+# https://github.com/jarun/nnn/blob/master/misc/quitcd/quitcd.bash_sh_zsh
+n () {
+  [ "${NNNLVL:-0}" -eq 0 ] || {
+    echo "nnn is already running"
+    return
+  }
+  NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+  command nnn -c -H "$@"
+  [ ! -f "$NNN_TMPFILE" ] || {
+    . "$NNN_TMPFILE"
+    rm -f -- "$NNN_TMPFILE" > /dev/null
+  }
+}
+
+# Nix Home Manager Session Variables
+[ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ] && \
+  source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+_dotsh_path_init
+PATH="$(printf '%s:' \
+  "$HOME/.local/opt/npm/global/node_modules/.bin" \
+  "$HOME/.local/bin" \
+  "$HOME/.nix-profile/bin" \
+  '/nix/var/nix/profiles/default/bin' \
+  "$PATH" | \
+  sed 's/.$//')"
+_dotsh_editor_set nvim vim vi
+_dotsh_nnn_init
+_dotsh_cleanup
