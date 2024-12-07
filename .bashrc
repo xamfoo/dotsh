@@ -6,7 +6,13 @@ _dotsh_bash_cleanup() {
 }
 
 _dotsh_bash_history() {
-  export PROMPT_COMMAND="history -a; history -n"
+  # Append history, don't overwrite
+  shopt -s histappend
+  HISTCONTROL=ignoreboth
+  HISTFILESIZE=50000
+  HISTIGNORE="clear:history:[bf]g:exit:date:* --help"
+  HISTSIZE=50000
+  PROMPT_COMMAND="history -a; history -n"
 }
 
 _dotsh_bash_hooks() {
