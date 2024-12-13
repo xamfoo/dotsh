@@ -16,3 +16,8 @@ export LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 case $- in
   *i*) export ENV="${ENV:-$DOTSH_SCRIPT_DIR/.shrc}" ;;
 esac
+
+# Source optional files in ./.shrc.d/
+for f in "$DOTSH_SCRIPT_DIR"/.shrc.d/*; do
+  [ ! -f "$f" ] || source "$f"
+done
