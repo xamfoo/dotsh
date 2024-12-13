@@ -21,8 +21,8 @@ _dotsh_bash_hooks() {
   command -v nnn >/dev/null && \
     [ -e "$HOME/.nix-profile/share/bash-completion/completions/nnn.bash" ] && \
     source "$HOME/.nix-profile/share/bash-completion/completions/nnn.bash"
-  if ! type '__start_kubectl' 2>/dev/null; then
-    command -v kubectl /dev/null && source <(kubectl completion bash)
+  if ! type '__start_kubectl' >/dev/null 2>&1; then
+    command -v kubectl >/dev/null && source <(kubectl completion bash)
   fi
 }
 
