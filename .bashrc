@@ -31,6 +31,10 @@ _dotsh_bash_prompt() {
 
 # Use ./.shrc as a base for .bashrc
 source "$DOTSH_SCRIPT_DIR/.shrc"
+# Update LINES and COLUMNS after each command like zsh
+shopt -s checkwinsize
+# Enable matching '**' to zero or more directories
+shopt -s globstar
 _dotsh_bash_prompt
 _dotsh_bash_history
 _dotsh_bash_hooks
