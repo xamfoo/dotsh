@@ -23,11 +23,12 @@ _dotsh_zsh_history() {
 }
 
 _dotsh_zsh_hooks() {
-  command -v direnv >/dev/null && source <(direnv hook zsh)
-  command -v fzf >/dev/null && source <(fzf --zsh)
-  if ! type '_kubectl' >/dev/null 2>&1; then
-    command -v kubectl >/dev/null && source <(kubectl completion zsh)
-  fi
+  ! command -v direnv >/dev/null || type _direnv_hook >/dev/null 2>&1 || \
+    source <(direnv hook zsh)
+  ! command -v fzf >/dev/null || type fzf-file-widget >/dev/null 2>&1 || \
+    source <(fzf --zsh)
+  ! command -v kubectl >/dev/null || type _kubectl >/dev/null 2>&1 || \
+    source <(kubectl completion zsh)
 }
 
 _dotsh_zsh_prompt() {
