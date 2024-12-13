@@ -17,6 +17,12 @@ _dotsh_editor_set() {
   done
 }
 
+_dotsh_lesspipe_init() {
+  local lesspipe="$(command -v lesspipe || command -v lesspipe.sh)"
+  [ -n "$lesspipe" ] || return 0
+  eval "$($lesspipe)"
+}
+
 _dotsh_nnn_init() {
   command -v nnn >/dev/null || return 0
   local nuke_path="$HOME/.config/nnn/plugins/nuke"
@@ -64,5 +70,6 @@ PATH="$(printf '%s:' \
   "$PATH" | \
   sed 's/.$//')"
 _dotsh_editor_set nvim vim vi
+_dotsh_lesspipe_init
 _dotsh_nnn_init
 _dotsh_cleanup
