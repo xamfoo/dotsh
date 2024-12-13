@@ -25,6 +25,9 @@ _dotsh_zsh_history() {
 _dotsh_zsh_hooks() {
   command -v direnv >/dev/null && source <(direnv hook zsh)
   command -v fzf >/dev/null && source <(fzf --zsh)
+  if ! type '_kubectl' 2>/dev/null; then
+    command -v kubectl >/dev/null && source <(kubectl completion zsh)
+  fi
 }
 
 _dotsh_zsh_prompt() {
