@@ -16,19 +16,20 @@ _dotsh_bash_history() {
 }
 
 _dotsh_bash_hooks() {
-  command -v direnv >/dev/null && eval "$(direnv hook bash)"
-  command -v fzf >/dev/null && eval "$(fzf --bash)"
-  command -v nnn >/dev/null && \
-    [ -e "$HOME/.nix-profile/share/bash-completion/completions/nnn.bash" ] && \
-    source "$HOME/.nix-profile/share/bash-completion/completions/nnn.bash"
-  if ! type '__start_kubectl' >/dev/null 2>&1; then
-    command -v kubectl >/dev/null && source <(kubectl completion bash)
-  fi
+  local bash_completion="$HOME/.nix-profile/etc/profile.d/bash_completion.sh"
+  [ ! -e "$bash_completion" ] || source "$bash_completion"
+  ! command -v direnv >/dev/null || type _direnv_hook >/dev/null 2>&1 || \
+    source <(direnv hook bash)
+  ! command -v fzf >/dev/null || type fzf-file-widget >/dev/null 2>&1 || \
+    source <(fzf --bash)
+  ! command -v kubectl >/dev/null || type __start_kubectl >/dev/null 2>&1 || \
+    source <(kubectl completion bash)
 }
 
 _dotsh_bash_prompt() {
   command -v direnv >/dev/null || return 0
   export -f dotsh_direnv_prompt_prefix
+  # TODO:Make this idempotent
   PS1='$(dotsh_direnv_prompt_prefix)'"$PS1"
 }
 
