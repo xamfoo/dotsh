@@ -17,6 +17,12 @@ _dotsh_editor_set() {
   done
 }
 
+_dotsh_nix_home_manager_init() {
+  local session_vars="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+  # Nix Home Manager Session Variables
+  [ -e "$session_vars" ] && source "$session_vars"
+}
+
 _dotsh_lesspipe_init() {
   local lesspipe="$(command -v lesspipe || command -v lesspipe.sh)"
   [ -n "$lesspipe" ] || return 0
@@ -56,9 +62,6 @@ n () {
   }
 }
 
-# Nix Home Manager Session Variables
-[ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ] && \
-  source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 _dotsh_path_init
 PATH="$(printf '%s:' \
   "$HOME/go/bin" \
@@ -69,6 +72,7 @@ PATH="$(printf '%s:' \
   '/nix/var/nix/profiles/default/bin' \
   "$PATH" | \
   sed 's/.$//')"
+_dotsh_nix_home_manager_init
 _dotsh_editor_set nvim vim vi
 _dotsh_lesspipe_init
 _dotsh_nnn_init
