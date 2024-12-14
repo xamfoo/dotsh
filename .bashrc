@@ -27,10 +27,15 @@ _dotsh_bash_hooks() {
 }
 
 _dotsh_bash_prompt() {
-  command -v direnv >/dev/null || return 0
-  export -f dotsh_direnv_prompt_prefix
-  # TODO:Make this idempotent
-  PS1='$(dotsh_direnv_prompt_prefix)'"$PS1"
+  export _DOTSH_BASH_OLD_PS1_VAR=${_DOTSH_BASH_OLD_PS1_VAR:-$PS1}
+  PS1="$_DOTSH_BASH_OLD_PS1_VAR"
+  if command -v direnv >/dev/null; then
+    local prompt_fn=dotsh_direnv_prompt_prefix
+    if $prompt_fn >/dev/null && [[ ! $PS1 =~ $prompt_fn ]]; then
+      export -f $prompt_fn
+      PS1="\$($prompt_fn)$PS1"
+    fi
+  fi
 }
 
 # Use ./.shrc as a base for .bashrc

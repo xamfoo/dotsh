@@ -32,9 +32,15 @@ _dotsh_zsh_hooks() {
 }
 
 _dotsh_zsh_prompt() {
-  command -v direnv >/dev/null || return 0
-  setopt PROMPT_SUBST
-  PS1='$(dotsh_direnv_prompt_prefix)'"$PS1"
+  export _DOTSH_ZSH_OLD_PS1_VAR=${_DOTSH_ZSH_OLD_PS1_VAR:-$PS1}
+  PS1="$_DOTSH_ZSH_OLD_PS1_VAR"
+  if command -v direnv >/dev/null; then
+    local prompt_fn=dotsh_direnv_prompt_prefix
+    if $prompt_fn >/dev/null && [[ ! $PS1 =~ $prompt_fn ]]; then
+      setopt PROMPT_SUBST
+      PS1="\$($prompt_fn)$PS1"
+    fi
+  fi
 }
 
 # Use ./.shrc as a base for .zshrc
