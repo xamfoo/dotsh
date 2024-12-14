@@ -42,9 +42,8 @@ _dotsh_path_init() {
 }
 
 dotsh_direnv_prompt_prefix() {
-  if [ -n "$VIRTUAL_ENV" ] && [ -n "$DIRENV_DIR" ]; then
+  [ -z "$VIRTUAL_ENV" ] || [ -z "$DIRENV_DIR" ] || \
     echo "($(basename $VIRTUAL_ENV)) "
-  fi
 }
 
 # See commented source:
