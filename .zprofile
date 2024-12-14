@@ -1,5 +1,6 @@
 # Detect script directory in case it is not $HOME i.e. in a git project
 DOTSH_SCRIPT_DIR="$0:a:h"
+[ -e "$DOTSH_SCRIPT_DIR/.zprofile" ] || DOTSH_SCRIPT_DIR="$HOME"
 
 # Use ./.profile as a base for .zprofile,
 # then ensures zsh sources ./.zshrc, not ./.shrc.

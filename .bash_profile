@@ -1,5 +1,6 @@
 # Detect script directory in case it is not $HOME i.e. in a git project
 DOTSH_SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+[ -e "$DOTSH_SCRIPT_DIR/.bash_profile" ] || DOTSH_SCRIPT_DIR="$HOME"
 
 # Use ./.profile as a base for .bash_profile,
 # then ensures bash sources ./.bashrc, not ./.shrc.
