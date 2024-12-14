@@ -1,10 +1,3 @@
-_dotsh_zsh_cleanup() {
-  unset _dotsh_zsh_completion
-  unset _dotsh_zsh_history
-  unset _dotsh_zsh_hooks
-  unset _dotsh_zsh_cleanup # self-destruct last
-}
-
 _dotsh_zsh_completion() {
   autoload -Uz compinit
   compinit
@@ -53,4 +46,4 @@ _dotsh_zsh_completion
 _dotsh_zsh_prompt
 _dotsh_zsh_history
 _dotsh_zsh_hooks
-_dotsh_zsh_cleanup
+dotsh_unset_functions _dotsh_ "$DOTSH_SCRIPT_DIR/.zshrc"

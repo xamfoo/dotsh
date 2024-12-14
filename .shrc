@@ -1,12 +1,5 @@
 #!/usr/bin/env sh
 
-_dotsh_cleanup() {
-  unset _dotsh_editor_set
-  unset _dotsh_nnn_init
-  unset _dotsh_path_init
-  unset _dotsh_cleanup # self-destruct last
-}
-
 _dotsh_editor_set() {
   while [ "$#" -gt 0 ]; do
     if command -v "$1" >/dev/null; then
@@ -46,6 +39,18 @@ dotsh_direnv_prompt_prefix() {
     echo "($(basename $VIRTUAL_ENV)) "
 }
 
+# Unset functions declared in a file with a given prefix
+dotsh_unset_functions() {
+  if [ "$#" -ne 2 ]; then
+    >&2 echo "$0 requires 2 arguments: prefix and filename."
+    return 1
+  fi
+  while read -r fn; do
+    unset -f "$fn" || true
+  done < <(\
+    grep -E "^(function)?\s*$1.+\s*\(\)" "$2" | sed -r 's/\(\).+//')
+}
+
 # See commented source:
 # https://github.com/jarun/nnn/blob/master/misc/quitcd/quitcd.bash_sh_zsh
 n () {
@@ -75,4 +80,4 @@ _dotsh_nix_home_manager_init
 _dotsh_editor_set nvim vim vi
 _dotsh_lesspipe_init
 _dotsh_nnn_init
-_dotsh_cleanup
+dotsh_unset_functions _dotsh_ "$DOTSH_SCRIPT_DIR/.shrc"

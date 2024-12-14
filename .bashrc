@@ -1,10 +1,3 @@
-_dotsh_bash_cleanup() {
-  unset _dotsh_bash_history
-  unset _dotsh_bash_hooks
-  unset _dotsh_bash_prompt
-  unset _dotsh_bash_cleanup # self-destruct last
-}
-
 _dotsh_bash_history() {
   # Append history, don't overwrite
   shopt -s histappend
@@ -47,4 +40,4 @@ shopt -s globstar
 _dotsh_bash_prompt
 _dotsh_bash_history
 _dotsh_bash_hooks
-_dotsh_bash_cleanup
+dotsh_unset_functions _dotsh_ "$DOTSH_SCRIPT_DIR/.bashrc"
