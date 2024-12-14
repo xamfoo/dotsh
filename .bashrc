@@ -2,9 +2,9 @@ _dotsh_bash_history() {
   # Append history, don't overwrite
   shopt -s histappend
   HISTCONTROL=ignoreboth
-  HISTFILESIZE=50000
+  HISTFILESIZE=10000
   HISTIGNORE="clear:history:[bf]g:exit:date:* --help"
-  HISTSIZE=50000
+  HISTSIZE=10000
   PROMPT_COMMAND="history -a; history -n"
 }
 
