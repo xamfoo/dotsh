@@ -35,7 +35,7 @@ _dotsh_bash_prompt() {
   LP_ENABLE_BATT=0
   LP_MARK_PREFIX=$'\n'
   local liquidprompt="$HOME/.local/opt/liquidprompt/current/liquidprompt"
-  source "$liquidprompt"
+  [ ! -e "$liquidprompt" ] || source "$liquidprompt"
   # This block is not needed when using a batteries-included prompt {
   # if command -v direnv >/dev/null; then
   #   local prompt_fn=dotsh_direnv_prompt_prefix
