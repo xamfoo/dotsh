@@ -10,13 +10,16 @@ _dotsh_zsh_deps() {
   if [ ! -e "$site_functions/pure.zsh" ]; then
     tmpdir=$(mktemp -d 2>/dev/null || mktemp -d -t 'dotsh_zsh_deps_pure')
     tarball="$tmpdir/pure.tar.gz"
-    curl -sfLo "$tarball" \
-      'https://github.com/sindresorhus/pure/archive/refs/tags/v1.23.0.tar.gz' && \
-    echo "b316fe5aa25be2c2ef895dcad150248a43e12c4ac1476500e1539e2d67877921  $tarball" | \
+    (
+      cd "$tmpdir" &&
+      curl -sfLo "$tarball" \
+        'https://github.com/sindresorhus/pure/archive/refs/tags/v1.23.0.tar.gz' && \
+      echo "b316fe5aa25be2c2ef895dcad150248a43e12c4ac1476500e1539e2d67877921  $tarball" | \
       shasum -a 256 --check --status && \
-    tar xf "$tarball" --strip-components=1 && \
-    mv pure.zsh "$site_functions/prompt_pure_setup" && \
-    mv async.zsh "$site_functions/async" || \
+      tar xf "$tarball" --strip-components=1 && \
+      mv pure.zsh "$site_functions/prompt_pure_setup" && \
+      mv async.zsh "$site_functions/async"
+    ) || \
     >&2 echo 'ERROR: Failed to install zsh pure prompt'
   fi
 }
