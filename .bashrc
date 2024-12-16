@@ -1,3 +1,13 @@
+_dotsh_bash_deps() {
+  local liquidprompt_path="$HOME/.local/opt/liquidprompt/current"
+  if [ ! -e "$liquidprompt_path" ]; then
+    mkdir -p "$(basename "$liquidprompt_path")" && \
+      git clone --branch stable --depth=1 \
+      https://github.com/liquidprompt/liquidprompt.git \
+      "$liquidprompt_path"
+  fi
+}
+
 _dotsh_bash_history() {
   # Append history, don't overwrite
   shopt -s histappend
@@ -22,13 +32,19 @@ _dotsh_bash_hooks() {
 _dotsh_bash_prompt() {
   export _DOTSH_BASH_OLD_PS1_VAR=${_DOTSH_BASH_OLD_PS1_VAR:-$PS1}
   PS1="$_DOTSH_BASH_OLD_PS1_VAR"
-  if command -v direnv >/dev/null; then
-    local prompt_fn=dotsh_direnv_prompt_prefix
-    if $prompt_fn >/dev/null && [[ ! $PS1 =~ $prompt_fn ]]; then
-      export -f $prompt_fn
-      PS1="\$($prompt_fn)$PS1"
-    fi
-  fi
+  LP_ENABLE_BATT=0
+  LP_MARK_PREFIX=$'\n'
+  local liquidprompt="$HOME/.local/opt/liquidprompt/current/liquidprompt"
+  source "$liquidprompt"
+  # This block is not needed when using a batteries-included prompt {
+  # if command -v direnv >/dev/null; then
+  #   local prompt_fn=dotsh_direnv_prompt_prefix
+  #   if $prompt_fn >/dev/null && [[ ! $PS1 =~ $prompt_fn ]]; then
+  #     export -f $prompt_fn
+  #     PS1="\$($prompt_fn)$PS1"
+  #   fi
+  # fi
+  # }
 }
 
 # Use ./.shrc as a base for .bashrc
@@ -37,7 +53,8 @@ source "$DOTSH_SCRIPT_DIR/.shrc"
 shopt -s checkwinsize
 # Enable matching '**' to zero or more directories
 shopt -s globstar
-_dotsh_bash_prompt
+_dotsh_bash_deps
 _dotsh_bash_history
+_dotsh_bash_prompt
 _dotsh_bash_hooks
 dotsh_unset_functions _dotsh_ "$DOTSH_SCRIPT_DIR/.bashrc"
