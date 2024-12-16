@@ -6,8 +6,9 @@ _dotsh_zsh_completion() {
 _dotsh_zsh_deps() {
   local p10k_path="$HOME/.local/opt/powerlevel10k/current"
   if [ ! -e "$p10k_path" ]; then
-    mkdir -p "$(basename "$p10k_path")" &&
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$p10k_path"
+    mkdir -p "$(basename "$p10k_path")" && \
+      git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
+      "$p10k_path"
   fi
 }
 
