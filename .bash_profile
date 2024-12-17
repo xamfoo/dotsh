@@ -4,9 +4,14 @@ DOTSH_SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd
 
 # Use ./.profile as a base for .bash_profile,
 # then ensures bash sources ./.bashrc, not ./.shrc.
-[ ! -v ENV ] || DOTSH_ENV="$ENV"
+[ -z ${ENV+x} ] || DOTSH_ENV="$ENV"
 source "$DOTSH_SCRIPT_DIR/.profile"
-[ -v DOTSH_ENV ] && ENV="$DOTSH_ENV" && unset DOTSH_ENV || unset ENV
+if [ -n ${DOTSH_ENV+x} ]; then
+  ENV="$DOTSH_ENV"
+  unset DOTSH_ENV
+else
+  unset ENV
+fi
 
 # Source ./.bashrc also for interactive login shell e.g. ssh console.
 # This is similar to zsh built-in behavior.
