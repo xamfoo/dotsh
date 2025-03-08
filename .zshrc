@@ -38,6 +38,7 @@ _dotsh_zsh_hooks() {
     source <(fzf --zsh)
   ! command -v kubectl >/dev/null || type _kubectl >/dev/null 2>&1 || \
     source <(kubectl completion zsh)
+  ! command -v brew >/dev/null || source <(brew shellenv)
 }
 
 _dotsh_zsh_prompt() {
