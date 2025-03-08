@@ -1,4 +1,5 @@
 _dotsh_zsh_completion() {
+  ! command -v brew >/dev/null || source <(brew shellenv)
   autoload -Uz compinit
   compinit
 }
@@ -38,7 +39,6 @@ _dotsh_zsh_hooks() {
     source <(fzf --zsh)
   ! command -v kubectl >/dev/null || type _kubectl >/dev/null 2>&1 || \
     source <(kubectl completion zsh)
-  ! command -v brew >/dev/null || source <(brew shellenv)
 }
 
 _dotsh_zsh_prompt() {
@@ -71,7 +71,7 @@ bindkey -e # Set emacs binding if not zsh defaults to vi based on EDITOR
 _dotsh_zsh_deps
 _dotsh_zsh_fpath
 _dotsh_zsh_prompt
-_dotsh_zsh_hooks
 _dotsh_zsh_completion
+_dotsh_zsh_hooks
 _dotsh_zsh_history
 dotsh_unset_functions _dotsh_ "$DOTSH_SCRIPT_DIR/.zshrc"
