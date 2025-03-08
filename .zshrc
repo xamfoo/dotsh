@@ -71,7 +71,7 @@ bindkey -e # Set emacs binding if not zsh defaults to vi based on EDITOR
 _dotsh_zsh_deps
 _dotsh_zsh_fpath
 _dotsh_zsh_prompt
+_dotsh_zsh_hooks
 _dotsh_zsh_completion
 _dotsh_zsh_history
-_dotsh_zsh_hooks
 dotsh_unset_functions _dotsh_ "$DOTSH_SCRIPT_DIR/.zshrc"
