@@ -1,5 +1,5 @@
 # Detect script directory in case it is not $HOME i.e. in a git project
-export DOTSH_SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+export DOTSH_SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "${0#-}")" && pwd)"
 [ -e "$DOTSH_SCRIPT_DIR/.profile" ] || DOTSH_SCRIPT_DIR="$HOME"
 
 # Save uname result in variable
