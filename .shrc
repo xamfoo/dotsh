@@ -24,9 +24,10 @@ _dotsh_lesspipe_init() {
 
 _dotsh_nnn_init() {
   command -v nnn >/dev/null || return 0
-  local nuke_path="$HOME/.config/nnn/plugins/nuke"
-  [ -e "$nuke_path" ] && export NNN_OPENER="$nuke_path"
-  export NNN_PLUG='f:-fzplug2;c:fzcd'
+  # Temporarily disable nnn nuke plugin because of zombie processes
+  # local nuke_path="$HOME/.config/nnn/plugins/nuke"
+  # [ -e "$nuke_path" ] && export NNN_OPENER="$nuke_path"
+  # export NNN_PLUG='f:-fzplug2;c:fzcd'
 }
 
 _dotsh_path_init() {
