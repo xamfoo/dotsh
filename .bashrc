@@ -34,6 +34,7 @@ _dotsh_bash_prompt() {
   PS1="$_DOTSH_BASH_OLD_PS1_VAR"
   LP_ENABLE_BATT=0
   LP_MARK_PREFIX=$'\n'
+  LP_DISABLED_VCS_PATHS=('/') # Disable VCS display completely
   local liquidprompt="$HOME/.local/opt/liquidprompt/current/liquidprompt"
   [ ! -e "$liquidprompt" ] || source "$liquidprompt"
   # This block is not needed when using a batteries-included prompt {
