@@ -11,6 +11,14 @@ fi
 # Set UTF-8 locale to support double width characters
 export LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
+# Ensure TMPDIR is set for scripting consistency
+export TMPDIR="${TMPDIR:-${TEMP:-${TMP:-/tmp}}}"
+
+# Ensure XDG_RUNTIME_DIR is set for plenary.nvim
+# See issue: https://github.com/nvim-lua/plenary.nvim/issues/536
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$TMPDIR/xdg-runtime-$(id -u)}"
+mkdir -p "$XDG_RUNTIME_DIR"
+
 # Set ENV to source ./.shrc for interactive login shell e.g. ssh console.
 # This is similar to zsh built-in behavior.
 case $- in
