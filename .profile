@@ -19,6 +19,10 @@ export TMPDIR="${TMPDIR:-${TEMP:-${TMP:-/tmp}}}"
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$TMPDIR/xdg-runtime-$(id -u)}"
 mkdir -p "$XDG_RUNTIME_DIR"
 
+# Set XDG_CONFIG_HOME for sops to pick up
+# https://github.com/getsops/sops/blob/0b33453e9c8408eb67ad98dd1f23fe892580d9fc/README.rst#L233
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+
 # Set ENV to source ./.shrc for interactive login shell e.g. ssh console.
 # This is similar to zsh built-in behavior.
 case $- in
