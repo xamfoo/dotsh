@@ -21,6 +21,15 @@ find ~/.config/sh -path ~/.config/sh/.git -prune -o -name '.*' \
   \"\$HOME/\$(basename \"{}\").\$(date +'%s').bkup\"; ln -s \"{}\" ." \;
 ```
 
+## Upgrading
+
+[Powerlevel10k](https://github.com/romkatv/powerlevel10k)
+
+```bash
+cd "$HOME/.local/opt/powerlevel10k/current" \
+&& git pull --rebase --depth=1
+```
+
 ## Initialization Order
 
 ### Dash Initialization Order
