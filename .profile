@@ -23,6 +23,11 @@ mkdir -p "$XDG_RUNTIME_DIR"
 # https://github.com/getsops/sops/blob/0b33453e9c8408eb67ad98dd1f23fe892580d9fc/README.rst#L233
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 
+# Set environment variables depending on OSX keychain
+if command -v security >/dev/null; then
+  export ANTHROPIC_API_KEY_CMD='cmd:security find-generic-password -l anthropic -s claude -w'
+fi
+
 # Set ENV to source ./.shrc for interactive login shell e.g. ssh console.
 # This is similar to zsh built-in behavior.
 case $- in
