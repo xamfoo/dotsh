@@ -10,6 +10,12 @@ _dotsh_editor_set() {
   done
 }
 
+_dotsh_gpg_init() {
+  command -v gpg >/dev/null || return 0
+  [ -n "$(tty)" ] || return 0
+  export GPG_TTY="$(tty)"
+}
+
 _dotsh_nix_home_manager_init() {
   local session_vars="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
   # Nix Home Manager Session Variables
@@ -81,4 +87,5 @@ _dotsh_nix_home_manager_init
 _dotsh_editor_set nvim vim vi
 _dotsh_lesspipe_init
 _dotsh_nnn_init
+_dotsh_gpg_init
 dotsh_unset_functions _dotsh_ "$DOTSH_SCRIPT_DIR/.shrc"
