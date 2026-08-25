@@ -28,6 +28,8 @@ if command -v security >/dev/null; then
   export ANTHROPIC_API_KEY_CMD='cmd:security find-generic-password -l anthropic -s claude -w'
 fi
 
+export NONO_TRUST_PROXY_CA=true
+
 # Set ENV to source ./.shrc for interactive login shell e.g. ssh console.
 # This is similar to zsh built-in behavior.
 case $- in
